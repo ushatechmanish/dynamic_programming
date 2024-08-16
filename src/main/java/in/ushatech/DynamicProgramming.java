@@ -44,29 +44,30 @@ public final class DynamicProgramming {
     }
 
     // Function to find the length of longest common subsequence in two strings.
+    // Bottom approach :- no recursion required 
     static int lcs(int n, int m, String str1, String str2) 
     {
-       Map<String,Integer> map = new HashMap<>();
-        return helperLcs(n, m, str1, str2, map);
+      int[][] dp = new int[n+1][m+1];
+        
+      // row 0 and column 0 already initialized to 0
+
+      // iterate over the dp 
+      for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) 
+            {
+                if(str1.charAt(i)==str2.charAt(j))
+                {
+                    dp[i+1][j+1]= 1+ dp[i][j];
+                }
+                else
+                {
+                    dp[i+1][j+1]= Math.max(dp[i+1][j],dp[i][j+1]);
+                }    
+            }
+      }
+
+      return dp[n][m];
     }
-    static int helperLcs(int n, int m, String str1, String str2, Map<String,Integer> dp)
-    {
-        if(m==0 || n==0) return 0 ;
-        String key = Integer.toString(n)+":"+Integer.toString(m);
-        if(dp.containsKey(key)) return dp.get(key);
-        int char1 = str1.charAt(n-1);
-        int char2 = str2.charAt(m-1);
-        int result ; 
-        if(char1==char2)
-        {
-            result = 1+ helperLcs(n-1,m-1,str1,str2,dp);
-        }
-        else
-        {
-            result = Math.max(helperLcs(n,m-1,str1,str2,dp),helperLcs(n-1,m,str1,str2,dp));
-        }
-        dp.put(key,result);
-        return result;
-    }
+    
 
 }
