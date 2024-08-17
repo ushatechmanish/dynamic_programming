@@ -152,18 +152,18 @@ public final class DynamicProgramming {
     long maxSubarraySum(int[] arr) 
     {
         if(arr==null || arr.length==0) return 0;
-        long max = 0;
-        for (int i = 0; i < arr.length; i++) { // starting point
-            for (int j = 0; j < arr.length; j++) { // end point
-                long sum=0;
-                for(int k=i; k<=j;++k)
-                {
-                    sum+=arr[k];
-                }
+        long max = Integer.MIN_VALUE; // to cater to all negative values 
+        for (int i = 0; i < arr.length; i++) 
+        { // starting point
+            int sum = arr[i];
+            for (int j = i+1; j < arr.length; j++) 
+            { // end point
+                    sum+=arr[j];
                 max=Math.max(sum, max);
             }
         }
         return max;
     }
 
+    
 }
