@@ -66,7 +66,27 @@ public final class DynamicProgramming {
             }
       }
 
-      
+      // To Print the LCS , start in reverse order from maximum value 
+
+    StringBuilder sb = new StringBuilder();
+      for(int i=n, j=m ; i>0 && j>0; )
+      {
+        // Has the current value been derived from the diagonal element 
+        if(str1.charAt(i-1)==str2.charAt(j-1))
+        {
+            sb.append(str1.charAt(i-1));
+            --i;--j;
+        }
+        else if(dp[i-1][j]>=dp[i][j-1])
+        {
+            --i;
+        }
+        else
+        {
+            --j;
+        }
+      }
+      System.out.println(sb.reverse().toString());
       return dp[n][m];
     }
     
