@@ -155,8 +155,8 @@ public final class DynamicProgramming {
         long max = Integer.MIN_VALUE; // to cater to all negative values 
         for (int i = 0; i < arr.length; i++) 
         { // starting point
-            int sum = arr[i];
-            for (int j = i+1; j < arr.length; j++) 
+            int sum = 0;
+            for (int j = i; j < arr.length; j++) 
             { // end point
                     sum+=arr[j];
                 max=Math.max(sum, max);
