@@ -182,7 +182,7 @@ public final class DynamicProgramming {
     }
 
     // Kadane's algorithm
-    // Kadane's algorithm
+    
     static long maxSubarraySum3(int[] arr) {
         if (arr == null || arr.length == 0)
             return 0; // Handle empty array case
@@ -197,6 +197,25 @@ public final class DynamicProgramming {
         }
 
         // Return the maximum single element if all numbers are negative
+        return maxSoFar;
+    }
+    // Kadane's algorithm approach 2 
+    static long maxSubarraySum4(int[] arr) {
+        if (arr == null || arr.length == 0) return 0; // Handle empty array case
+    
+        long sumSoFar = arr[0]; // Initialize to the first element
+        long maxSoFar = arr[0]; // Initialize to the first element
+    
+        // Start the loop from index 0
+        for (int i = 0; i < arr.length; i++) {
+            if (i > 0) {
+                // Update sumSoFar only if not at the first element
+                sumSoFar = Math.max(arr[i], sumSoFar + arr[i]);
+            }
+            // Update maxSoFar
+            maxSoFar = Math.max(maxSoFar, sumSoFar);
+        }
+    
         return maxSoFar;
     }
 
