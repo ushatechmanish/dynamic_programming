@@ -23,6 +23,8 @@ public final class DynamicProgramming {
         int fibonnaciInput = 5;
         nthFibonacci(fibonnaciInput);
 
+        System.out.println(maxSubarraySum1(new int[] { 1, 2, 3, -1, 3, -1 }));
+
     }
 
     // Bottom Up approach.
@@ -146,24 +148,56 @@ public final class DynamicProgramming {
         return dp[n];
     }
 
-
-     // arr: input array
+    // arr: input array
     // Function to find the sum of contiguous subarray with maximum sum.
-    long maxSubarraySum(int[] arr) 
-    {
-        if(arr==null || arr.length==0) return 0;
-        long max = Integer.MIN_VALUE; // to cater to all negative values 
-        for (int i = 0; i < arr.length; i++) 
-        { // starting point
+    long maxSubarraySum(int[] arr) {
+        if (arr == null || arr.length == 0)
+            return 0;
+        long max = Integer.MIN_VALUE; // to cater to all negative values
+        for (int i = 0; i < arr.length; i++) { // starting point
             int sum = 0;
-            for (int j = i; j < arr.length; j++) 
-            { // end point
-                    sum+=arr[j];
-                max=Math.max(sum, max);
+            for (int j = i; j < arr.length; j++) { // end point
+                sum += arr[j];
+                max = Math.max(sum, max);
             }
         }
         return max;
     }
 
-    
+    static long maxSubarraySum1(int[] arr) {
+        // For every element , either we include the element to maximize the sum by
+        // adding it to
+
+        int maxSum = arr[0];// for first index the maxSum will always be equal to value at first index
+        int sumTillPrevIndex = 0;
+        for (int i = 0; i < arr.length; i++) {
+            sumTillPrevIndex = Math.max(sumTillPrevIndex + arr[i], arr[i]);
+            // either start the sum from current index if the sum till now becomes negative
+            // or extend the sum if it is more than the current index value
+            // effectively at every negative element the sum will reset to current element.
+            maxSum = Math.max(maxSum, sumTillPrevIndex);
+
+        }
+        return maxSum;
+    }
+
+    // Kadane's algorithm
+    // Kadane's algorithm
+    static long maxSubarraySum3(int[] arr) {
+        if (arr == null || arr.length == 0)
+            return 0; // Handle empty array case
+
+        long sumSoFar = arr[0];
+        long maxSoFar = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+
+            sumSoFar = Math.max(arr[i], sumSoFar + arr[i]); // Update sumSoFar
+            maxSoFar = Math.max(maxSoFar, sumSoFar); // Update maxSoFar
+        }
+
+        // Return the maximum single element if all numbers are negative
+        return maxSoFar;
+    }
+
 }
