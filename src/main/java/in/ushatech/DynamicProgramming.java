@@ -93,6 +93,63 @@ public final class DynamicProgramming {
       
       return dp[n][m];
     }
+    // Using direction table to store the direction 
+    static String lcs2(int n, int m, String str1, String str2) {
+        int[][] dp = new int[n + 1][m + 1];
+        char[][] direction = new char[n + 1][m + 1]; // 'D' for diagonal, 'U' for up, 'L' for left
     
+        // Fill the dp table and direction table
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    direction[i][j] = 'D'; // Diagonal
+                } else if (dp[i - 1][j] >= dp[i][j - 1]) {
+                    dp[i][j] = dp[i - 1][j];
+                    direction[i][j] = 'U'; // Up
+                } else {
+                    dp[i][j] = dp[i][j - 1];
+                    direction[i][j] = 'L'; // Left
+                }
+            }
+        }
+    
+        // Reconstruct the LCS using the direction table
+        StringBuilder sb = new StringBuilder();
+        int i = n, j = m;
+        while (i > 0 && j > 0) {
+            if (direction[i][j] == 'D') {
+                sb.append(str1.charAt(i - 1));
+                i--;
+                j--;
+            } else if (direction[i][j] == 'U') {
+                i--;
+            } else { // direction[i][j] == 'L'
+                j--;
+            }
+        }
+    
+        return sb.reverse().toString();
+    }
+    
+
+    // convert the following recurrence to code 
+    // T(0) =T(1)=2
+    // T(n) = Sigma_1^n-1  2xT(i)*T(i-1), for n>1
+
+    public int p1(int n)
+    {
+        int[] dp = new int[n+1];
+        dp[0]=2;
+        dp[1]=2;
+        for(int i=2; i<=n; ++i)
+        {
+            for(int j=1; j<i ; ++j)
+            {
+                dp[i]+=2* dp[j] * dp[j-1];
+            }
+        }
+        return dp[n];
+    }
 
 }
